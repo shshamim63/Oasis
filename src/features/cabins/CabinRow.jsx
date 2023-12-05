@@ -22,10 +22,10 @@ const TableRow = styled.div`
 const Img = styled.img`
   display: block;
   width: 6.4rem;
-  aspect-ratio: 3/2;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.5) translateY(-7px);
+  transform: scale(1.5) translateX(-7px);
 `;
 
 const Cabin = styled.div`
@@ -47,7 +47,14 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { id: cabinId, img, name, regularPrice, discount, maxCapacity } = cabin;
+  const {
+    id: cabinId,
+    image,
+    name,
+    regularPrice,
+    discount,
+    maxCapacity,
+  } = cabin;
 
   const queryClient = useQueryClient();
 
@@ -64,7 +71,7 @@ function CabinRow({ cabin }) {
 
   return (
     <TableRow role="row">
-      <Img src={img} />
+      <Img src={image} alt={name} />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>
@@ -85,7 +92,7 @@ CabinRow.propTypes = {
     regularPrice: PropTypes.number.isRequired,
     created_at: PropTypes.string.isRequired,
     discount: PropTypes.number.isRequired,
-    img: PropTypes.string,
+    image: PropTypes.string,
   }),
 };
 
