@@ -55,7 +55,7 @@ function FormRow({ label, error, children, orientation }) {
     <StyledFormRow orientation={orientation}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
-      {error && <Error>Error</Error>}
+      {error && <Error>{error}</Error>}
     </StyledFormRow>
   );
 }
