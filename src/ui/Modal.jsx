@@ -1,9 +1,11 @@
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { cloneElement, createContext, useContext, useState } from "react";
 
 import { FaTimes } from "react-icons/fa";
-import { createPortal } from "react-dom";
-import { cloneElement, createContext, useContext, useState } from "react";
+
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -74,12 +76,13 @@ function Open({ children, opens: opensWindowName }) {
 
 function Dialog({ children, name }) {
   const { openName, close } = useContext(ModalContext);
+  const ref = useOutsideClick(close);
 
   if (name !== openName) return null;
 
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref}>
         <Button onClick={close}>
           <FaTimes />
         </Button>
