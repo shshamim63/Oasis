@@ -55,8 +55,11 @@ const ModalContext = createContext();
 
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
+
   const close = () => setOpenName("");
+
   const open = setOpenName;
+
   return (
     <ModalContext.Provider value={{ openName, close, open }}>
       {children}
@@ -69,7 +72,7 @@ function Open({ children, opens: opensWindowName }) {
   return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
-function Window({ children, name }) {
+function Dialog({ children, name }) {
   const { openName, close } = useContext(ModalContext);
 
   if (name !== openName) return null;
@@ -87,7 +90,7 @@ function Window({ children, name }) {
   );
 }
 
-Window.propTypes = {
+Dialog.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -103,6 +106,6 @@ Modal.propTypes = {
 };
 
 Modal.Open = Open;
-Modal.Window = Window;
+Modal.Dialog = Dialog;
 
 export default Modal;
