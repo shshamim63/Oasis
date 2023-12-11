@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 import styled from "styled-components";
 import { IoIosCopy } from "react-icons/io";
@@ -12,17 +11,10 @@ import { useDeleteCabin } from "./useDeleteCabin";
 import { formatCurrency } from "../../utils/currency";
 import { useCreateCabin } from "./useCreateCabin";
 
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
 const Img = styled.img`
   display: block;
@@ -52,10 +44,8 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const [showForm, setShowForm] = useState(false);
   const { deleteCabin, isDeleting } = useDeleteCabin();
-  const { createCabin, isCreating } = useCreateCabin();
-  const isWorking = isDeleting || isCreating;
+  const { createCabin } = useCreateCabin();
 
   const {
     id: cabinId,
@@ -80,28 +70,41 @@ function CabinRow({ cabin }) {
 
   return (
     <>
-      <TableRow role="row">
+      <Table.Row>
         <Img src={image} alt={name} />
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
         <div>
-          <button onClick={handleDuplicate} disabled={isWorking}>
-            <IoIosCopy />
-          </button>
-          <button
-            onClick={() => setShowForm((show) => !show)}
-            disabled={isWorking}
-          >
-            <CiEdit />
-          </button>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isWorking}>
-            <FaTrashAlt />
-          </button>
+          <Modal>
+            <Menus.Menu>
+              <Menus.Toogle id={cabinId} />
+              <Menus.List id={cabinId}>
+                <Menus.Button onClick={handleDuplicate} icon={<IoIosCopy />}>
+                  Duplicate
+                </Menus.Button>
+                <Modal.Open opens="cabin-delete">
+                  <Menus.Button icon={<FaTrashAlt />}>Delete</Menus.Button>
+                </Modal.Open>
+                <Modal.Open opens="cabin-edit">
+                  <Menus.Button icon={<CiEdit />}>Edit</Menus.Button>
+                </Modal.Open>
+              </Menus.List>
+              <Modal.Dialog name="cabin-edit">
+                <CreateCabinForm cabinToEdit={cabin} />
+              </Modal.Dialog>
+              <Modal.Dialog name="cabin-delete">
+                <ConfirmDelete
+                  resourceName="cabins"
+                  disabled={isDeleting}
+                  onConfirm={() => deleteCabin(cabinId)}
+                />
+              </Modal.Dialog>
+            </Menus.Menu>
+          </Modal>
         </div>
-      </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+      </Table.Row>
     </>
   );
 }

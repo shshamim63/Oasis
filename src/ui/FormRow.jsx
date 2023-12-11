@@ -61,7 +61,10 @@ function FormRow({ label, error, children, orientation }) {
 }
 
 FormRow.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   label: PropTypes.string,
   error: PropTypes.string,
   orientation: PropTypes.string,
