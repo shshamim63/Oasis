@@ -109,17 +109,36 @@ Row.propTypes = {
 };
 Body.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      maxCapacity: PropTypes.number.isRequired,
-      regularPrice: PropTypes.number.isRequired,
-      created_at: PropTypes.string.isRequired,
-      discount: PropTypes.number.isRequired,
-      image: PropTypes.string,
-    })
-  ).isRequired,
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        maxCapacity: PropTypes.number.isRequired,
+        regularPrice: PropTypes.number.isRequired,
+        created_at: PropTypes.string.isRequired,
+        discount: PropTypes.number.isRequired,
+        image: PropTypes.string,
+      }),
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        created_at: PropTypes.string.isRequired,
+        endDate: PropTypes.string.isRequired,
+        startDate: PropTypes.string.isRequired,
+        numNights: PropTypes.number,
+        numGuests: PropTypes.number,
+        status: PropTypes.string.isRequired,
+        totalPrice: PropTypes.number,
+        cabins: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+        }),
+        guests: PropTypes.shape({
+          email: PropTypes.string.isRequired,
+          fullName: PropTypes.string.isRequired,
+        }),
+      }),
+    ])
+  ),
   render: PropTypes.func.isRequired,
 };
 
