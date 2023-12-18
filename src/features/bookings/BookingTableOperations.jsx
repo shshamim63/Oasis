@@ -22,7 +22,7 @@ const SortOptions = [
 function BookingTableOperations() {
   return (
     <TableOperations>
-      <Filter filterField="discount" options={filterOptions} />
+      <Filter filterField="status" options={filterOptions} />
       <SortBy options={SortOptions} />
     </TableOperations>
   );
