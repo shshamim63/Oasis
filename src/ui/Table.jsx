@@ -51,6 +51,13 @@ const Empty = styled.p`
   margin: 2.4rem;
 `;
 
+const Footer = styled.footer`
+  background-color: var(--color-grey-50);
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
+`;
+
 const TableContext = createContext();
 
 function Table({ columns, children }) {
@@ -85,6 +92,7 @@ function Body({ data, render }) {
 Table.Header = Header;
 Table.Row = Row;
 Table.Body = Body;
+Table.Footer = Footer;
 
 Table.propTypes = {
   columns: PropTypes.string.isRequired,
