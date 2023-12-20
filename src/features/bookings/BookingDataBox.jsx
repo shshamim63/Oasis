@@ -211,7 +211,7 @@ BookingDataBox.propTypes = {
       fullName: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
       nationality: PropTypes.string.isRequired,
-      countryFlag: PropTypes.string.isRequired,
+      countryFlag: PropTypes.string, // Not required
       nationalID: PropTypes.string.isRequired,
     }),
     cabins: PropTypes.shape({
