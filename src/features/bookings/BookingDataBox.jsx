@@ -80,9 +80,13 @@ const Price = styled.div`
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
+    props.ispaid === "true"
+      ? "var(--color-green-100)"
+      : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+    props.ispaid === "true"
+      ? "var(--color-green-700)"
+      : "var(--color-yellow-700)"};
 
   & p:last-child {
     text-transform: uppercase;
@@ -173,7 +177,7 @@ function BookingDataBox({ booking }) {
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
-        <Price isPaid={isPaid}>
+        <Price ispaid={JSON.stringify(isPaid)}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
 
@@ -211,7 +215,7 @@ BookingDataBox.propTypes = {
       fullName: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
       nationality: PropTypes.string.isRequired,
-      countryFlag: PropTypes.string, // Not required
+      countryFlag: PropTypes.string,
       nationalID: PropTypes.string.isRequired,
     }),
     cabins: PropTypes.shape({
