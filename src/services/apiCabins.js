@@ -1,10 +1,15 @@
 import supabase, { supabaseUrl } from "./supabase";
 
+import {
+  STATIC_BUCKET_PATH,
+  STATIC_CABIN_FOLDER_NAME,
+} from "../utils/constants";
+
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
 
   if (error) {
-    console.errorr(error);
+    console.error(error);
     throw new Error("Cabins could not be loaded");
   }
 
@@ -22,7 +27,7 @@ export async function createEditCabin(newCabin, id) {
 
     imagePath = hasImagePath
       ? newCabin.image
-      : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+      : `${supabaseUrl}/${STATIC_BUCKET_PATH}/${STATIC_CABIN_FOLDER_NAME}/${imageName}`;
   }
 
   let query = supabase.from("cabins");
