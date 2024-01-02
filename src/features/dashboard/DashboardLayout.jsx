@@ -24,7 +24,7 @@ function DashboardLayout() {
   const { cabins, isLoading: isCabinLoading } = useCabins();
 
   if (isBookingsLoading || isStaysLoading || isCabinLoading) return <Spinner />;
-  
+
   return (
     <StyledDashboardLayout>
       <Stats

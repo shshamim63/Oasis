@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import BookingDataBox from "./BookingDataBox";
 import Row from "../../ui/Row";
@@ -7,14 +8,14 @@ import Tag from "../../ui/Tag";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
+import Spinner from "../../ui/Spinner";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import Empty from "../../ui/Empty";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
-import Spinner from "../../ui/Spinner";
-import { useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckout";
-import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
@@ -33,6 +34,8 @@ function BookingDetail() {
   const moveBack = useMoveBack();
 
   if (isLoading || isCheckingOut || isDeleting) return <Spinner />;
+
+  if (!Object.keys(booking).length) return <Empty resourceName="booking" />;
 
   const statusToTagName = {
     unconfirmed: "blue",
