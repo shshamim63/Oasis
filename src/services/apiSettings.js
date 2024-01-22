@@ -4,7 +4,6 @@ export async function getSettings() {
   const { data, error } = await supabase.from("settings").select("*").single();
 
   if (error) {
-    console.log(error);
     throw new Error("Failed to get settings");
   }
 
@@ -19,7 +18,6 @@ export async function updateSetting(newSetting) {
     .single();
 
   if (error) {
-    console.log(error);
     throw new Error("Failed to update setting");
   }
 
