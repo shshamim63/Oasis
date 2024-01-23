@@ -12,14 +12,14 @@ import { formatCurrency } from "../../utils/currency";
 
 function Stats({ bookings, confirmedStays, numDays, cabinCounts }) {
   const numBookings = bookings.length;
-  
+
   const sales = bookings.reduce((acc, curr) => acc + curr.totalPrice, 0);
-  
+
   const checkins = confirmedStays.length;
-  
+
   const occupation =
     confirmedStays.reduce((acc, curr) => acc + curr.numNights, 0) /
-    (numDays * cabinCounts);
+      (numDays * cabinCounts) || 0;
 
   return (
     <>
