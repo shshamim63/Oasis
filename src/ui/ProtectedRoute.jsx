@@ -22,7 +22,7 @@ function ProtectedRoute({ children }) {
       navigate("/login");
   }, [user, navigate, isLoading]);
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return (
       <FullPage>
         <Spinner />
